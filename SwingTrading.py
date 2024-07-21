@@ -2,6 +2,7 @@ import ccxt
 import json
 from pprint import pprint
 import time
+import os
 
 class TradeBot:
     '''
@@ -181,9 +182,23 @@ class TradeBot:
 
 
 def main():
+    try:
+        # 获取环境变量并转换为相应类型
+        BUY_PRICE = int(os.environ['BUY_PRICE'].strip())
+        SELL_PRICE = int(os.environ['SELL_PRICE'].strip())
+        AMOUNT_CURRENCY = int(os.environ['AMOUNT_CURRENCY'].strip())
 
-    bot = TradeBot('coinbase', 'secret.json')
-    bot.swing_trade('BTC/USDC', 67000, 70000, 100)
-    # bot.cancel_all_orders()
+        bot = TradeBot('coinbase', 'secret.json')
+        bot.swing_trade('BTC/USDC', BUY_PRICE, SELL_PRICE, AMOUNT_CURRENCY)
+    except KeyError as e:
+        print(f"Error: Missing required environment variable: {e}")
+        exit(1)
+    except ValueError as e:
+        print(f"Error: Invalid value for environment variable: {e}")
+        exit(1)
 if __name__ == '__main__':
+    BUY_PRICE = os.getenv('BUY_PRICE', 67000)
+    SELL_PRICE = os.getenv('SELL_PRICE', 70000)
+    AMOUNT_CURRENCY = os.getenv('AMOUNT_CURRENCY', 100)
+
     main()

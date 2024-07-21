@@ -1,0 +1,16 @@
+version: '3'
+services:
+  bot1:
+    image: swing_trading_bot:latest
+    container_name: 67k_70k_300_stbot
+    environment:
+      - BUY_PRICE=67000
+      - SELL_PRICE=70000
+      - AMOUNT_CURRENCY=300
+#  bot2:
+#    image: swing_trading_bot:latest
+#    container_name: 63k_67k_300_stbot
+#    environment:
+#      - BUY_PRICE=63000
+#      - SELL_PRICE=67000
+#      - AMOUNT_CURRENCY=300
